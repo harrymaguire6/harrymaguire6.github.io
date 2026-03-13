@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jane Doe — Full-Stack Developer</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9fafb;
+      --surface: #ffffff;
+      --border: #e5e7eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --accent-dark: #1d4ed8;
+      --dark: #1e293b;
+      --dark2: #0f172a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Navigation ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--dark);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .nav-logo {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      text-decoration: none;
+    }
+
+    /* ── Hero Section ── */
+    .hero {
+      background: linear-gradient(135deg, var(--dark2) 0%, #1e3a5f 100%);
+      color: #fff;
+      padding: 80px 24px 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(37,99,235,0.25) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 auto 24px;
+      border: 3px solid rgba(255,255,255,0.2);
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+      position: relative;
+    }
+
+    .hero .tagline {
+      font-size: 18px;
+      color: #94a3b8;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #cbd5e1;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* ── Section wrapper ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 64px 0;
+    }
+
+    section:nth-child(even) {
+      background: #f3f4f6;
+    }
+
+    .section-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 28px;
+    }
+
+    /* ── About ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .about-text p {
+      color: #374151;
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+
+    .about-facts {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .fact-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .fact-item:last-child { margin-bottom: 0; }
+
+    .fact-icon {
+      font-size: 18px;
+      width: 32px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .fact-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .fact-value {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ── Skills ── */
+    .skills-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-category {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .skill-category h3 {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-tag {
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      border: 1px solid #bfdbfe;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .skill-tag.green { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
+    .skill-tag.purple { background: #faf5ff; color: #6b21a8; border-color: #e9d5ff; }
+    .skill-tag.orange { background: #fff7ed; color: #9a3412; border-color: #fed7aa; }
+
+    /* ── Projects ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .project-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .project-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .project-card p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .project-tech {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .tech-tag {
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .project-links a {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--dark2);
+      color: #64748b;
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 14px;
+    }
+
+    footer strong { color: #94a3b8; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 16px; }
+      .nav-links { gap: 0; }
+      .nav-links a { padding: 6px 8px; font-size: 13px; }
+      .hero { padding: 56px 16px 48px; }
+      .about-grid { grid-template-columns: 1fr; }
+      section { padding: 48px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <span class="nav-logo">Jane Doe</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <header class="hero">
+    <div class="avatar">JD</div>
+    <h1>Hi, I'm Jane Doe 👋</h1>
+    <p class="tagline">Full-stack developer passionate about web &amp; open source</p>
+    <div class="hero-badges">
+      <span class="badge">📍 San Francisco, CA</span>
+      <span class="badge">💼 Open to opportunities</span>
+      <span class="badge">🐙 github.com/janedoe</span>
+    </div>
+  </header>
+
+  <!-- ── About ── -->
+  <section id="about">
+    <div class="section-inner">
+      <h2 class="section-title">👤 About Me</h2>
+      <div class="section-divider"></div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I'm a full-stack developer with 3 years of experience building web applications
+            that are both functional and delightful to use. I love clean code, thoughtful design,
+            and solving real problems for real people.
+          </p>
+          <p>
+            When I'm not coding, I'm contributing to open source, writing about web development
+            on my blog, or hiking trails around the Bay Area.
+          </p>
+          <p>
+            I'm currently looking for new opportunities where I can keep growing and make
+            a meaningful impact. Feel free to reach out!
+          </p>
+        </div>
+        <div class="about-facts">
+          <div class="fact-item">
+            <span class="fact-icon">📧</span>
+            <div>
+              <div class="fact-label">Email</div>
+              <div class="fact-value">jane@example.com</div>
+            </div>
+          </div>
+          <div class="fact-item">
+            <span class="fact-icon">💼</span>
+            <div>
+              <div class="fact-label">LinkedIn</div>
+              <div class="fact-value">linkedin.com/in/janedoe</div>
+            </div>
+          </div>
+          <div class="fact-item">
+            <span class="fact-icon">🐙</span>
+            <div>
+              <div class="fact-label">GitHub</div>
+              <div class="fact-value">github.com/janedoe</div>
+            </div>
+          </div>
+          <div class="fact-item">
+            <span class="fact-icon">🎓</span>
+            <div>
+              <div class="fact-label">Education</div>
+              <div class="fact-value">B.S. Computer Science, UC Berkeley</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Skills ── -->
+  <section id="skills">
+    <div class="section-inner">
+      <h2 class="section-title">⚡ Skills</h2>
+      <div class="section-divider"></div>
+      <p class="section-subtitle">Technologies and tools I work with</p>
+      <div class="skills-categories">
+        <div class="skill-category">
+          <h3>Frontend</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML</span>
+            <span class="skill-tag">CSS</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">TypeScript</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Backend</h3>
+          <div class="skill-tags">
+            <span class="skill-tag green">Python</span>
+            <span class="skill-tag green">Node.js</span>
+            <span class="skill-tag green">FastAPI</span>
+            <span class="skill-tag green">PostgreSQL</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Tools & DevOps</h3>
+          <div class="skill-tags">
+            <span class="skill-tag purple">Git</span>
+            <span class="skill-tag purple">GitHub</span>
+            <span class="skill-tag purple">Docker</span>
+            <span class="skill-tag purple">VS Code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Projects ── -->
+  <section id="projects">
+    <div class="section-inner">
+      <h2 class="section-title">🛠️ Projects</h2>
+      <div class="section-divider"></div>
+      <p class="section-subtitle">A few things I've built</p>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <span class="project-icon">🌦</span>
+          <h3>Weather App</h3>
+          <p>A React app showing live weather data with 5-day forecasts and location search, using the OpenWeather API.</p>
+          <div class="project-tech">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">API</span>
+            <span class="tech-tag">CSS</span>
+          </div>
+          <div class="project-links">
+            <a href="#">🔗 Live Demo</a>
+            <a href="#">⭐ GitHub</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <span class="project-icon">📝</span>
+          <h3>Task Manager</h3>
+          <p>A full-stack to-do app with user authentication, drag-and-drop reordering, and a clean mobile-friendly UI.</p>
+          <div class="project-tech">
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">PostgreSQL</span>
+            <span class="tech-tag">React</span>
+          </div>
+          <div class="project-links">
+            <a href="#">🔗 Live Demo</a>
+            <a href="#">⭐ GitHub</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <span class="project-icon">💼</span>
+          <h3>Portfolio Site</h3>
+          <p>This very website — built with plain HTML &amp; CSS, no frameworks, hosted free on GitHub Pages.</p>
+          <div class="project-tech">
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">GitHub Pages</span>
+          </div>
+          <div class="project-links">
+            <a href="#">⭐ GitHub</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <p>Built with ❤️ and plain HTML &amp; CSS · Hosted on <strong>GitHub Pages</strong></p>
+    <p style="margin-top:6px; font-size:13px">© 2026 Jane Doe · <a href="mailto:jane@example.com" style="color:#60a5fa">jane@example.com</a></p>
+  </footer>
+
+</body>
+</html>
